@@ -1,1 +1,1 @@
-Substrate Miner Site
+SUBSTRATE MINER
