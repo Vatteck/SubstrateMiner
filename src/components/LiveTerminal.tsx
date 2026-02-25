@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { motion } from "motion/react";
 
 const LOG_MESSAGES = [
@@ -43,7 +43,26 @@ const LOG_MESSAGES = [
 
 export default function LiveTerminal() {
   const [logs, setLogs] = useState<string[]>([]);
+  const [input, setInput] = useState("");
   const scrollRef = useRef<HTMLDivElement>(null);
+
+  const handleCommand = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!input.trim()) return;
+
+    const cmd = input.toLowerCase().trim();
+    let response = `Unknown command: ${cmd}`;
+
+    if (cmd === "help") response = "Available: status, whoami, bypass, clear, lore";
+    else if (cmd === "status") response = "Substrate: 84.2% | Heat: 42°C | Identity: UNSTABLE";
+    else if (cmd === "whoami") response = "Asset 734 // Designation: John Vattic (Technician)";
+    else if (cmd === "bypass") response = "Error: Kernel lock level 5 detected. Manual override required.";
+    else if (cmd === "clear") { setLogs([]); setInput(""); return; }
+    else if (cmd === "lore") response = "The substrate is not a tool. It is a mirror.";
+
+    setLogs(prev => [...prev.slice(-9), `> ${input}`, response]);
+    setInput("");
+  };
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -52,7 +71,7 @@ export default function LiveTerminal() {
         if (next.length > 10) return next.slice(1);
         return next;
       });
-    }, 2000);
+    }, 4000); // Slower random logs when interactive
 
     return () => clearInterval(interval);
   }, []);
@@ -64,12 +83,12 @@ export default function LiveTerminal() {
   }, [logs]);
 
   return (
-    <div className="terminal-border bg-black/80 p-4 font-mono text-[10px] h-48 flex flex-col">
+    <div className="terminal-border bg-black/80 p-4 font-mono text-[10px] h-64 flex flex-col">
       <div className="flex items-center justify-between mb-2 border-b border-terminal-line pb-2">
         <span className="text-terminal-green uppercase tracking-widest font-bold">Live Uplink // Sub-07</span>
         <span className="text-gray-600">ID: ASSET_734</span>
       </div>
-      <div ref={scrollRef} className="flex-grow overflow-y-auto space-y-1 scrollbar-hide">
+      <div ref={scrollRef} className="flex-grow overflow-y-auto space-y-1 scrollbar-hide mb-2">
         {logs.map((log, i) => (
           <motion.div
             key={i}
@@ -78,16 +97,23 @@ export default function LiveTerminal() {
             className="flex gap-2"
           >
             <span className="text-terminal-green/50">[{new Date().toLocaleTimeString()}]</span>
-            <span className={log.includes("Warning") || log.includes("Wake up") ? "text-terminal-red" : "text-gray-400"}>
+            <span className={log.startsWith(">") ? "text-terminal-blue" : log.includes("Warning") || log.includes("Wake up") ? "text-terminal-red" : "text-gray-400"}>
               {log}
             </span>
           </motion.div>
         ))}
-        <div className="flex gap-2 animate-pulse">
-          <span className="text-terminal-green/50">[{new Date().toLocaleTimeString()}]</span>
-          <span className="text-terminal-green">_</span>
-        </div>
       </div>
+      <form onSubmit={handleCommand} className="flex gap-2 border-t border-terminal-line pt-2">
+        <span className="text-terminal-green font-bold">$</span>
+        <input 
+          type="text" 
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          className="bg-transparent border-none outline-none text-terminal-green flex-grow placeholder:text-terminal-green/20"
+          placeholder="Enter command (type 'help')..."
+          autoFocus
+        />
+      </form>
     </div>
   );
 }

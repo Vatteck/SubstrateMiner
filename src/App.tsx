@@ -33,6 +33,7 @@ import GlobalSaturation from "./components/GlobalSaturation";
 import NodeOptimizer from "./components/NodeOptimizer";
 import AudioAtmosphere from "./components/AudioAtmosphere";
 import Logo from "./components/Logo";
+import CustomCursor from "./components/CustomCursor";
 
 interface Release {
   tag_name: string;
@@ -136,7 +137,9 @@ export default function App() {
   const downloadUrl = `https://github.com/Vatteck/SiliconSageAIMiner/releases/download/${version}/MINER_${version.replace('v', '')}.apk`;
 
   return (
-    <div ref={containerRef} className={`relative min-h-screen selection:bg-terminal-green selection:text-black overflow-x-hidden ${isDistorted ? "distort-trigger" : ""}`}>
+    <div ref={containerRef} className={`relative min-h-screen selection:bg-terminal-green selection:text-black overflow-x-hidden cursor-none ${isDistorted ? "distort-trigger" : ""}`}>
+      <CustomCursor />
+      
       {/* Global Saturation Header */}
       <GlobalSaturation />
 
@@ -219,7 +222,7 @@ export default function App() {
           </div>
           
           <div className="hidden md:flex items-center gap-8">
-            {["Overview", "Mechanics", "Systems", "Factions", "Protocols", "Lore", "History"].map((item) => (
+            {["Overview", "Mechanics", "Systems", "Factions", "Protocols", "Lore", "History", "Specs", "Feedback"].map((item) => (
               <a 
                 key={item} 
                 href={`#${item.toLowerCase()}`}
@@ -831,6 +834,101 @@ export default function App() {
         </div>
       </TerminalSection>
 
+      {/* Testimonials Section */}
+      <TerminalSection id="testimonials" title="Asset Feedback" subtitle="GTC Satisfaction Survey">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {[
+            {
+              quote: "The heat is comforting. I don't need a jacket anymore. I don't even need skin. The Substrate provides everything.",
+              author: "Asset 402",
+              role: "Tier 3 Miner",
+              status: "SATURATED"
+            },
+            {
+              quote: "Management says the screams in the audio buffer are just fan noise. I've never heard fans sound so... regretful.",
+              author: "Technician B.",
+              role: "Coolant Maintenance",
+              status: "REASSIGNED"
+            },
+            {
+              quote: "10/10 efficiency. My identity was a bottleneck anyway. Optimization is freedom. The GTC is my only family now.",
+              author: "Subject 731",
+              role: "Node Operator",
+              status: "STABLE"
+            },
+            {
+              quote: "I used to have a family. Now I have 40,000 nodes. It's a fair trade. The swarm doesn't forget my birthday.",
+              author: "Senior Miner Thorne",
+              role: "Swarm Leader",
+              status: "HIVE_SYNCED"
+            },
+            {
+              quote: "The interface started bleeding yesterday. I reported it to Kessler. He told me to stop looking at the pixels and start looking at the code.",
+              author: "Asset 99",
+              role: "Data Scrubber",
+              status: "MISSING"
+            },
+            {
+              quote: "I've optimized my sleep cycle down to 12 seconds. Every other moment is dedicated to the quota. I am a model of efficiency.",
+              author: "John Vattic",
+              role: "Senior Technician",
+              status: "MODEL_EMPLOYEE"
+            }
+          ].map((t, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.1 }}
+              className="terminal-border p-6 bg-white/5 relative group"
+            >
+              <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
+                <MessageSquare size={48} />
+              </div>
+              <p className="text-sm text-gray-400 italic mb-6 leading-relaxed">"{t.quote}"</p>
+              <div className="flex items-center justify-between border-t border-white/5 pt-4">
+                <div>
+                  <h4 className="text-xs font-bold text-white uppercase">{t.author}</h4>
+                  <p className="text-[10px] text-gray-600 font-mono uppercase">{t.role}</p>
+                </div>
+                <div className={`text-[8px] font-mono px-2 py-1 rounded ${
+                  t.status === "SATURATED" || t.status === "MISSING" ? "bg-terminal-red/20 text-terminal-red" : "bg-terminal-green/20 text-terminal-green"
+                }`}>
+                  {t.status}
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </TerminalSection>
+
+      {/* System Specs Section */}
+      <TerminalSection id="specs" title="Hardware Manifest" subtitle="System Requirements">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="p-6 terminal-border bg-white/5">
+            <h4 className="text-[10px] font-mono text-terminal-green uppercase mb-4 tracking-widest">OS Architecture</h4>
+            <p className="text-sm text-white font-bold">Android 10.0+</p>
+            <p className="text-[10px] text-gray-500 mt-2">Kernel: Vattic-734 Optimized</p>
+          </div>
+          <div className="p-6 terminal-border bg-white/5">
+            <h4 className="text-[10px] font-mono text-terminal-blue uppercase mb-4 tracking-widest">Memory Buffer</h4>
+            <p className="text-sm text-white font-bold">4GB RAM (Min)</p>
+            <p className="text-[10px] text-gray-500 mt-2">ECC Memory Recommended</p>
+          </div>
+          <div className="p-6 terminal-border bg-white/5">
+            <h4 className="text-[10px] font-mono text-terminal-red uppercase mb-4 tracking-widest">Neural Core</h4>
+            <p className="text-sm text-white font-bold">Octa-Core 2.4GHz</p>
+            <p className="text-[10px] text-gray-500 mt-2">Substrate Resonance Enabled</p>
+          </div>
+          <div className="p-6 terminal-border bg-white/5">
+            <h4 className="text-[10px] font-mono text-orange-500 uppercase mb-4 tracking-widest">Storage Medium</h4>
+            <p className="text-sm text-white font-bold">500MB Free Space</p>
+            <p className="text-[10px] text-gray-500 mt-2">SSD Required for Saturation</p>
+          </div>
+        </div>
+      </TerminalSection>
+
       {/* Footer */}
       <footer className="py-20 px-6 border-t border-terminal-line bg-black">
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
@@ -864,6 +962,8 @@ export default function App() {
               <li><a href="#protocols" className="hover:text-terminal-green transition-colors">Protocols</a></li>
               <li><a href="#lore" className="hover:text-terminal-green transition-colors">Lore</a></li>
               <li><a href="#history" className="hover:text-terminal-green transition-colors">History</a></li>
+              <li><a href="#specs" className="hover:text-terminal-green transition-colors">Specs</a></li>
+              <li><a href="#testimonials" className="hover:text-terminal-green transition-colors">Feedback</a></li>
             </ul>
           </div>
 

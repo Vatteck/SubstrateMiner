@@ -16,17 +16,29 @@ export default function AudioAtmosphere() {
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
-    // We'll use a synthesized drone or a placeholder URL for a low hum
-    // For now, we'll simulate the toggle state
+    if (audioRef.current) {
+      audioRef.current.volume = 0.3;
+      audioRef.current.loop = true;
+    }
   }, []);
 
   const toggleMute = () => {
+    if (audioRef.current) {
+      if (isMuted) {
+        audioRef.current.play().catch(e => console.log("Audio play blocked:", e));
+      } else {
+        audioRef.current.pause();
+      }
+    }
     setIsMuted(!isMuted);
-    // In a real app, we'd play/pause a looping ambient track here
   };
 
   return (
     <div className="fixed bottom-8 left-8 z-50 flex items-center gap-4">
+      <audio 
+        ref={audioRef} 
+        src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" // Placeholder: Replace with your BGM URL
+      />
       <button 
         onClick={toggleMute}
         className="p-3 rounded-full border border-white/10 bg-black/50 backdrop-blur-md text-gray-500 hover:text-terminal-green hover:border-terminal-green transition-all group relative"
