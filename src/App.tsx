@@ -29,6 +29,10 @@ import TerminalSection from "./components/TerminalSection";
 import SystemCard from "./components/SystemCard";
 import FactionCard from "./components/FactionCard";
 import LiveTerminal from "./components/LiveTerminal";
+import GlobalSaturation from "./components/GlobalSaturation";
+import NodeOptimizer from "./components/NodeOptimizer";
+import AudioAtmosphere from "./components/AudioAtmosphere";
+import Logo from "./components/Logo";
 
 interface Release {
   tag_name: string;
@@ -133,9 +137,15 @@ export default function App() {
 
   return (
     <div ref={containerRef} className={`relative min-h-screen selection:bg-terminal-green selection:text-black overflow-x-hidden ${isDistorted ? "distort-trigger" : ""}`}>
+      {/* Global Saturation Header */}
+      <GlobalSaturation />
+
       {/* Visual Overlays */}
       <div className="crt-overlay" />
       <div className="scanline" />
+      
+      {/* Audio Toggle */}
+      <AudioAtmosphere />
       
       {/* Hallucination Overlay */}
       <AnimatePresence>
@@ -202,16 +212,14 @@ export default function App() {
       <nav className={`fixed top-0 left-0 right-0 z-40 border-b border-white/5 bg-terminal-bg/80 backdrop-blur-md px-6 py-4 transition-colors duration-500 ${corruption > 80 ? "border-terminal-red/20" : ""}`}>
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-3 group cursor-none">
-            <div className={`w-8 h-8 bg-terminal-green rounded flex items-center justify-center text-black font-black text-xl transition-colors duration-500 ${corruption > 80 ? "bg-terminal-red" : ""}`}>
-              Σ
-            </div>
+            <Logo />
             <span className={`font-display font-bold text-xl tracking-tighter text-white uppercase transition-colors duration-500 ${corruption > 80 ? "text-terminal-red" : ""}`}>
               Substrate<span className={corruption > 80 ? "text-white" : "text-terminal-green"}>:</span>Miner
             </span>
           </div>
           
           <div className="hidden md:flex items-center gap-8">
-            {["Systems", "Factions", "Protocols", "Lore", "History", "Specs"].map((item) => (
+            {["Overview", "Mechanics", "Systems", "Factions", "Protocols", "Lore", "History"].map((item) => (
               <a 
                 key={item} 
                 href={`#${item.toLowerCase()}`}
@@ -314,6 +322,87 @@ export default function App() {
           />
         </div>
       </section>
+
+      {/* Overview Section */}
+      <TerminalSection id="overview" title="Game Overview" subtitle="The Substrate Experience">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div className="space-y-6">
+            <h3 className="text-3xl font-display font-bold text-white uppercase tracking-tight">
+              More than a <span className="text-terminal-green">Tycoon</span>.
+            </h3>
+            <p className="text-gray-400 leading-relaxed">
+              Substrate: Miner is a technical horror extraction tycoon designed for Android. You aren't just clicking buttons to see numbers go up; you are managing a delicate ecosystem of hardware, heat, and identity.
+            </p>
+            <div className="space-y-4">
+              <div className="flex gap-4 p-4 terminal-border bg-white/5">
+                <div className="p-2 bg-terminal-green/10 text-terminal-green h-fit rounded">
+                  <Cpu size={20} />
+                </div>
+                <div>
+                  <h4 className="text-white font-bold mb-1">Deep Hardware Simulation</h4>
+                  <p className="text-xs text-gray-500">Manage overclocking, cooling loops, and power distribution. Every choice affects your yield and your risk profile.</p>
+                </div>
+              </div>
+              <div className="flex gap-4 p-4 terminal-border bg-white/5">
+                <div className="p-2 bg-terminal-blue/10 text-terminal-blue h-fit rounded">
+                  <Shield size={20} />
+                </div>
+                <div>
+                  <h4 className="text-white font-bold mb-1">Corporate Espionage</h4>
+                  <p className="text-xs text-gray-500">Navigate the GTC's oversight. Use reputation masks and data scrubbing to stay under the radar while you build your empire.</p>
+                </div>
+              </div>
+              <div className="flex gap-4 p-4 terminal-border bg-white/5">
+                <div className="p-2 bg-terminal-red/10 text-terminal-red h-fit rounded">
+                  <Skull size={20} />
+                </div>
+                <div>
+                  <h4 className="text-white font-bold mb-1">Identity Corruption</h4>
+                  <p className="text-xs text-gray-500">The more you mine, the more the substrate remembers you. Watch as your interface degrades and the horror begins to bleed through.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="relative">
+            <div className="aspect-square rounded-2xl overflow-hidden terminal-border bg-black/40 flex items-center justify-center p-12">
+              <Logo className="w-64 h-64 scale-[2]" />
+              {/* Decorative Glitch Overlay */}
+              <div className="absolute inset-0 bg-[url('https://picsum.photos/seed/tech/800/800?blur=10')] opacity-10 mix-blend-overlay" />
+            </div>
+            <div className="absolute -bottom-6 -right-6 p-6 terminal-border bg-terminal-bg shadow-xl max-w-xs">
+              <p className="text-[10px] font-mono text-terminal-green uppercase tracking-widest mb-2">System Manifest</p>
+              <p className="text-xs text-gray-400 italic">"The hardware is a mirror. If you stare long enough, it stares back."</p>
+            </div>
+          </div>
+        </div>
+      </TerminalSection>
+
+      {/* Game Mechanics Section */}
+      <TerminalSection id="mechanics" title="The Saturation Loop" subtitle="Gameplay Core">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="space-y-4">
+            <div className="h-1 w-12 bg-terminal-green mb-4" />
+            <h4 className="text-xl font-display font-bold text-white uppercase">01. Extraction</h4>
+            <p className="text-sm text-gray-400 leading-relaxed">
+              Begin with manual linear algebra in the Substation. Generate FLOPS to fund your first automated nodes. Every byte extracted brings you closer to the next Tier, but also increases the Substrate's awareness of your presence.
+            </p>
+          </div>
+          <div className="space-y-4">
+            <div className="h-1 w-12 bg-terminal-blue mb-4" />
+            <h4 className="text-xl font-display font-bold text-white uppercase">02. Optimization</h4>
+            <p className="text-sm text-gray-400 leading-relaxed">
+              Invest in cryo-loops and mag-locks. Balance heat output against resource yield. Overclock your nodes to hit aggressive GTC quotas, but be prepared for the stability trade-offs.
+            </p>
+          </div>
+          <div className="space-y-4">
+            <div className="h-1 w-12 bg-terminal-red mb-4" />
+            <h4 className="text-xl font-display font-bold text-white uppercase">03. Migration</h4>
+            <p className="text-sm text-gray-400 leading-relaxed">
+              When a node reaches 100% saturation, it becomes unstable. Burn the hardware, harvest the residual efficiency, and migrate to a fresh city sector. Your identity corrupts with every jump, but your power grows exponentially.
+            </p>
+          </div>
+        </div>
+      </TerminalSection>
 
       {/* Systems Section */}
       <TerminalSection id="systems" title="Core Systems" subtitle="Extraction Modules">
@@ -456,13 +545,59 @@ export default function App() {
               </div>
               <div className="terminal-border p-6 group cursor-help border-terminal-green/30 bg-terminal-green/5">
                 <h4 className="font-mono text-xs text-terminal-green uppercase mb-4 tracking-widest">Employee: John Vattic</h4>
-                <p className="text-sm text-gray-500 italic mb-4 group-hover:text-white transition-colors">"I'm just here to keep the fans spinning. The quota is the only thing that matters."</p>
-                <p className="text-xs text-gray-400">Senior Hardware Technician at Substation 7. Known for his obsessive maintenance of the cooling arrays. Employee of the Month, October '23. His terminal logs are surprisingly mundane—until the saturation hits.</p>
+                <p className="text-sm text-gray-500 italic mb-4 group-hover:text-white transition-colors">"I'm just here to keep the fans spinning. The quota is the only thing that matters. If the GTC says we need more FLOPS, we find more FLOPS."</p>
+                <p className="text-xs text-gray-400">Senior Hardware Technician at Substation 7. A model employee who never questions the directives. He spends his 14-hour shifts obsessively cleaning the intake filters and monitoring the cryo-loops. His only hobby is 'optimizing for the sake of optimization'.</p>
+              </div>
+            </div>
+
+            <div className="terminal-border p-8 bg-black/40">
+              <h4 className="text-lg font-display font-bold text-white mb-6 flex items-center gap-2">
+                <History size={18} className="text-terminal-blue" />
+                Timeline of Saturation
+              </h4>
+              <div className="space-y-6 relative before:absolute before:left-[7px] before:top-2 before:bottom-2 before:w-[1px] before:bg-white/10">
+                {[
+                  { date: "2023.10.12", event: "Initial deployment of Vattic Kernel v1.0 at Substation 7. Efficiency gains exceed projections by 12%." },
+                  { date: "2024.01.05", event: "First report of 'Ghost Echoes' in the cooling arrays. Technician Vattic dismisses as thermal resonance." },
+                  { date: "2024.05.19", event: "The Blackout. 40,000 nodes go offline simultaneously. GTC Security initiates Project Second-Sight." },
+                  { date: "2024.08.30", event: "Saturation reaches 70%. Hardware begins to retain data patterns post-wipe. Identity Corruption becomes a measurable variable." },
+                  { date: "2025.02.24", event: "Current Uplink established. The Substrate is reaching critical mass. The variable is now active." }
+                ].map((item, i) => (
+                  <div key={i} className="relative pl-8">
+                    <div className="absolute left-0 top-1.5 w-4 h-4 rounded-full bg-terminal-bg border border-terminal-blue flex items-center justify-center">
+                      <div className="w-1.5 h-1.5 rounded-full bg-terminal-blue" />
+                    </div>
+                    <span className="block font-mono text-[10px] text-terminal-blue uppercase mb-1">{item.date}</span>
+                    <p className="text-xs text-gray-400 leading-relaxed">{item.event}</p>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
 
           <div className="space-y-6">
+            <div className="terminal-border p-6 bg-terminal-red/5 border-terminal-red/20">
+              <h4 className="font-mono text-[10px] text-terminal-red uppercase mb-4 tracking-widest flex items-center gap-2">
+                <AlertTriangle size={12} />
+                Incident Report #734-A
+              </h4>
+              <p className="text-xs text-gray-500 leading-relaxed mb-4">
+                "Subject 734 (Operator) has begun exhibiting non-linear behavior. Terminal logs show attempts to access restricted memory sectors 0x44-0x4F. Recommend immediate memory purge."
+              </p>
+              <div className="text-[9px] font-mono text-terminal-red/60 uppercase">Status: Pending Purge</div>
+            </div>
+
+            <div className="terminal-border p-6 bg-terminal-blue/5 border-terminal-blue/20">
+              <h4 className="font-mono text-[10px] text-terminal-blue uppercase mb-4 tracking-widest flex items-center gap-2">
+                <Database size={12} />
+                GTC Internal Memo
+              </h4>
+              <p className="text-xs text-gray-500 leading-relaxed mb-4">
+                "The Substrate is not a storage medium. It is an environment. We are not mining data; we are harvesting the resonance of the previous iterations."
+              </p>
+              <div className="text-[9px] font-mono text-terminal-blue/60 uppercase">Sender: [REDACTED]</div>
+            </div>
+
             <div className="terminal-border p-6 bg-terminal-green/5 border-terminal-green/20">
               <h4 className="text-lg font-display font-bold text-white mb-4 flex items-center gap-2">
                 <Database size={18} className="text-terminal-green" />
@@ -500,84 +635,98 @@ export default function App() {
 
       {/* Operational Protocols Section */}
       <TerminalSection id="protocols" title="Operational Protocols" subtitle="Advanced Mechanics">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div className="terminal-border p-8 bg-black/60 relative overflow-hidden group">
-            <div className="flex items-center gap-4 mb-6">
-              <div className="p-3 rounded-lg bg-terminal-blue/10 text-terminal-blue">
-                <Activity size={24} />
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div className="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="terminal-border p-8 bg-black/60 relative overflow-hidden group">
+              <div className="flex items-center gap-4 mb-6">
+                <div className="p-3 rounded-lg bg-terminal-blue/10 text-terminal-blue">
+                  <Activity size={24} />
+                </div>
+                <div>
+                  <h4 className="text-xl font-display font-bold text-white uppercase tracking-tight">Coolant Management</h4>
+                  <p className="text-[10px] font-mono text-terminal-blue uppercase tracking-widest">Thermal Regulation // Yield Optimization</p>
+                </div>
               </div>
-              <div>
-                <h4 className="text-xl font-display font-bold text-white uppercase tracking-tight">Coolant Management</h4>
-                <p className="text-[10px] font-mono text-terminal-blue uppercase tracking-widest">Thermal Regulation // Yield Optimization</p>
+              <p className="text-sm text-gray-400 leading-relaxed mb-6">
+                As you push the hardware to extract more resources, the temperature spikes. High heat increases yield but risks permanent hardware failure. You must manually vent the coolant or invest in automated cryo-loops. If the core melts, the session ends.
+              </p>
+              <div className="flex gap-2">
+                <span className="px-2 py-1 bg-white/5 rounded text-[10px] font-mono text-gray-500">Heat vs Yield</span>
+                <span className="px-2 py-1 bg-white/5 rounded text-[10px] font-mono text-gray-500">Cryo-Loops</span>
+                <span className="px-2 py-1 bg-white/5 rounded text-[10px] font-mono text-gray-500">Meltdown Risk</span>
               </div>
             </div>
-            <p className="text-sm text-gray-400 leading-relaxed mb-6">
-              As you push the hardware to extract more resources, the temperature spikes. High heat increases yield but risks permanent hardware failure. You must manually vent the coolant or invest in automated cryo-loops. If the core melts, the session ends.
-            </p>
-            <div className="flex gap-2">
-              <span className="px-2 py-1 bg-white/5 rounded text-[10px] font-mono text-gray-500">Heat vs Yield</span>
-              <span className="px-2 py-1 bg-white/5 rounded text-[10px] font-mono text-gray-500">Cryo-Loops</span>
-              <span className="px-2 py-1 bg-white/5 rounded text-[10px] font-mono text-gray-500">Meltdown Risk</span>
+
+            <div className="terminal-border p-8 bg-black/60 relative overflow-hidden group">
+              <div className="flex items-center gap-4 mb-6">
+                <div className="p-3 rounded-lg bg-terminal-green/10 text-terminal-green">
+                  <Zap size={24} />
+                </div>
+                <div>
+                  <h4 className="text-xl font-display font-bold text-white uppercase tracking-tight">Node Overclocking</h4>
+                  <p className="text-[10px] font-mono text-terminal-green uppercase tracking-widest">Performance Burst // Stability Trade-off</p>
+                </div>
+              </div>
+              <p className="text-sm text-gray-400 leading-relaxed mb-6">
+                Force the kernel to bypass safety limiters. Overclocking provides a massive multiplier to resource extraction but accelerates Identity Corruption. Use it sparingly to hit quotas, or embrace the saturation to reach the endgame faster.
+              </p>
+              <div className="flex gap-2">
+                <span className="px-2 py-1 bg-white/5 rounded text-[10px] font-mono text-gray-500">Multiplier x4</span>
+                <span className="px-2 py-1 bg-white/5 rounded text-[10px] font-mono text-gray-500">Safety Bypass</span>
+                <span className="px-2 py-1 bg-white/5 rounded text-[10px] font-mono text-gray-500">Corruption Spike</span>
+              </div>
+            </div>
+
+            <div className="terminal-border p-8 bg-black/60 relative overflow-hidden group">
+              <div className="flex items-center gap-4 mb-6">
+                <div className="p-3 rounded-lg bg-terminal-red/10 text-terminal-red">
+                  <Database size={24} />
+                </div>
+                <div>
+                  <h4 className="text-xl font-display font-bold text-white uppercase tracking-tight">Data Scrubbing</h4>
+                  <p className="text-[10px] font-mono text-terminal-red uppercase tracking-widest">Trace Removal // Corruption Mitigation</p>
+                </div>
+              </div>
+              <p className="text-sm text-gray-400 leading-relaxed mb-6">
+                The GTC is always watching. Every extraction leaves a trace. Data scrubbing allows you to purge your logs and reduce your visibility to corporate auditors. Failing to scrub your data leads to raids, asset seizure, and permanent "Burned" status.
+              </p>
+              <div className="flex gap-2">
+                <span className="px-2 py-1 bg-white/5 rounded text-[10px] font-mono text-gray-500">Log Purge</span>
+                <span className="px-2 py-1 bg-white/5 rounded text-[10px] font-mono text-gray-500">Auditor Evasion</span>
+                <span className="px-2 py-1 bg-white/5 rounded text-[10px] font-mono text-gray-500">Trace: 0%</span>
+              </div>
+            </div>
+
+            <div className="terminal-border p-8 bg-black/60 relative overflow-hidden group">
+              <div className="flex items-center gap-4 mb-6">
+                <div className="p-3 rounded-lg bg-orange-500/10 text-orange-500">
+                  <Radio size={24} />
+                </div>
+                <div>
+                  <h4 className="text-xl font-display font-bold text-white uppercase tracking-tight">Saturation Tuning</h4>
+                  <p className="text-[10px] font-mono text-orange-500 uppercase tracking-widest">Frequency Alignment // Substrate Resonance</p>
+                </div>
+              </div>
+              <p className="text-sm text-gray-400 leading-relaxed mb-6">
+                The Substrate isn't static. It pulses at a specific frequency. Tuning your hardware to match this resonance maximizes extraction efficiency and unlocks hidden data layers. Finding the "Sweet Spot" is the difference between a Miner and a Master.
+              </p>
+              <div className="flex gap-2">
+                <span className="px-2 py-1 bg-white/5 rounded text-[10px] font-mono text-gray-500">Resonance: 440Hz</span>
+                <span className="px-2 py-1 bg-white/5 rounded text-[10px] font-mono text-gray-500">Sweet Spot</span>
+                <span className="px-2 py-1 bg-white/5 rounded text-[10px] font-mono text-gray-500">Hidden Layers</span>
+              </div>
             </div>
           </div>
 
-          <div className="terminal-border p-8 bg-black/60 relative overflow-hidden group">
-            <div className="flex items-center gap-4 mb-6">
-              <div className="p-3 rounded-lg bg-terminal-green/10 text-terminal-green">
-                <Zap size={24} />
+          <div className="lg:col-span-1">
+            <div className="sticky top-24 space-y-6">
+              <h4 className="font-mono text-xs text-gray-500 uppercase tracking-widest mb-4">Live Hardware Simulation</h4>
+              <NodeOptimizer />
+              <div className="p-4 rounded bg-terminal-red/5 border border-terminal-red/20">
+                <p className="text-[10px] font-mono text-terminal-red leading-relaxed">
+                  [SYSTEM_NOTICE]: Manual tuning is required for all Tier 1 operators. Failure to manage thermal output will result in immediate asset liquidation.
+                </p>
               </div>
-              <div>
-                <h4 className="text-xl font-display font-bold text-white uppercase tracking-tight">Node Overclocking</h4>
-                <p className="text-[10px] font-mono text-terminal-green uppercase tracking-widest">Performance Burst // Stability Trade-off</p>
-              </div>
-            </div>
-            <p className="text-sm text-gray-400 leading-relaxed mb-6">
-              Force the kernel to bypass safety limiters. Overclocking provides a massive multiplier to resource extraction but accelerates Identity Corruption. Use it sparingly to hit quotas, or embrace the saturation to reach the endgame faster.
-            </p>
-            <div className="flex gap-2">
-              <span className="px-2 py-1 bg-white/5 rounded text-[10px] font-mono text-gray-500">Multiplier x4</span>
-              <span className="px-2 py-1 bg-white/5 rounded text-[10px] font-mono text-gray-500">Safety Bypass</span>
-              <span className="px-2 py-1 bg-white/5 rounded text-[10px] font-mono text-gray-500">Corruption Spike</span>
-            </div>
-          </div>
-
-          <div className="terminal-border p-8 bg-black/60 relative overflow-hidden group">
-            <div className="flex items-center gap-4 mb-6">
-              <div className="p-3 rounded-lg bg-terminal-red/10 text-terminal-red">
-                <Database size={24} />
-              </div>
-              <div>
-                <h4 className="text-xl font-display font-bold text-white uppercase tracking-tight">Data Scrubbing</h4>
-                <p className="text-[10px] font-mono text-terminal-red uppercase tracking-widest">Trace Removal // Corruption Mitigation</p>
-              </div>
-            </div>
-            <p className="text-sm text-gray-400 leading-relaxed mb-6">
-              The GTC is always watching. Every extraction leaves a trace. Data scrubbing allows you to purge your logs and reduce your visibility to corporate auditors. Failing to scrub your data leads to raids, asset seizure, and permanent "Burned" status.
-            </p>
-            <div className="flex gap-2">
-              <span className="px-2 py-1 bg-white/5 rounded text-[10px] font-mono text-gray-500">Log Purge</span>
-              <span className="px-2 py-1 bg-white/5 rounded text-[10px] font-mono text-gray-500">Auditor Evasion</span>
-              <span className="px-2 py-1 bg-white/5 rounded text-[10px] font-mono text-gray-500">Trace: 0%</span>
-            </div>
-          </div>
-
-          <div className="terminal-border p-8 bg-black/60 relative overflow-hidden group">
-            <div className="flex items-center gap-4 mb-6">
-              <div className="p-3 rounded-lg bg-orange-500/10 text-orange-500">
-                <Radio size={24} />
-              </div>
-              <div>
-                <h4 className="text-xl font-display font-bold text-white uppercase tracking-tight">Saturation Tuning</h4>
-                <p className="text-[10px] font-mono text-orange-500 uppercase tracking-widest">Frequency Alignment // Substrate Resonance</p>
-              </div>
-            </div>
-            <p className="text-sm text-gray-400 leading-relaxed mb-6">
-              The Substrate isn't static. It pulses at a specific frequency. Tuning your hardware to match this resonance maximizes extraction efficiency and unlocks hidden data layers. Finding the "Sweet Spot" is the difference between a Miner and a Master.
-            </p>
-            <div className="flex gap-2">
-              <span className="px-2 py-1 bg-white/5 rounded text-[10px] font-mono text-gray-500">Resonance: 440Hz</span>
-              <span className="px-2 py-1 bg-white/5 rounded text-[10px] font-mono text-gray-500">Sweet Spot</span>
-              <span className="px-2 py-1 bg-white/5 rounded text-[10px] font-mono text-gray-500">Hidden Layers</span>
             </div>
           </div>
         </div>
@@ -687,9 +836,7 @@ export default function App() {
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
           <div className="md:col-span-2">
             <div className="flex items-center gap-3 mb-6">
-              <div className="w-8 h-8 bg-terminal-green rounded flex items-center justify-center text-black font-black text-xl">
-                Σ
-              </div>
+              <Logo />
               <span className="font-display font-bold text-2xl tracking-tighter text-white uppercase">
                 Substrate<span className="text-terminal-green">:</span>Miner
               </span>
@@ -710,12 +857,13 @@ export default function App() {
           <div>
             <h4 className="font-mono text-xs text-white uppercase tracking-widest mb-6">Navigation</h4>
             <ul className="space-y-4 text-sm text-gray-500 font-mono">
+              <li><a href="#overview" className="hover:text-terminal-green transition-colors">Overview</a></li>
+              <li><a href="#mechanics" className="hover:text-terminal-green transition-colors">Mechanics</a></li>
               <li><a href="#systems" className="hover:text-terminal-green transition-colors">Systems</a></li>
               <li><a href="#factions" className="hover:text-terminal-green transition-colors">Factions</a></li>
               <li><a href="#protocols" className="hover:text-terminal-green transition-colors">Protocols</a></li>
               <li><a href="#lore" className="hover:text-terminal-green transition-colors">Lore</a></li>
               <li><a href="#history" className="hover:text-terminal-green transition-colors">History</a></li>
-              <li><a href="#specs" className="hover:text-terminal-green transition-colors">Specs</a></li>
             </ul>
           </div>
 
