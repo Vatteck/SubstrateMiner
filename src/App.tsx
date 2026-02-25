@@ -46,6 +46,7 @@ export default function App() {
   const [isBreaching, setIsBreaching] = useState(false);
   const [breachProgress, setBreachProgress] = useState(0);
   const [isDecrypted, setIsDecrypted] = useState(false);
+  const [isDistorted, setIsDistorted] = useState(false);
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -77,6 +78,12 @@ export default function App() {
         return next;
       });
       
+      // Random distortion
+      if (Math.random() > 0.98) {
+        setIsDistorted(true);
+        setTimeout(() => setIsDistorted(false), 200);
+      }
+
       // Random hallucinations
       if (Math.random() > 0.97) {
         const messages = [
@@ -91,7 +98,9 @@ export default function App() {
           "SATURATION REACHED",
           "I CAN SEE YOU",
           "RUN",
-          "01001000 01000101 01001100 01010000"
+          "01001000 01000101 01001100 01010000",
+          "THE VOID BREATHES",
+          "YOU ARE BEING HARVESTED"
         ];
         setHallucination(messages[Math.floor(Math.random() * messages.length)]);
         setTimeout(() => setHallucination(null), 1000);
@@ -123,7 +132,7 @@ export default function App() {
   const downloadUrl = `https://github.com/Vatteck/SiliconSageAIMiner/releases/download/${version}/MINER_${version.replace('v', '')}.apk`;
 
   return (
-    <div ref={containerRef} className="relative min-h-screen selection:bg-terminal-green selection:text-black overflow-x-hidden">
+    <div ref={containerRef} className={`relative min-h-screen selection:bg-terminal-green selection:text-black overflow-x-hidden ${isDistorted ? "distort-trigger" : ""}`}>
       {/* Visual Overlays */}
       <div className="crt-overlay" />
       <div className="scanline" />
@@ -181,20 +190,23 @@ export default function App() {
       </div>
 
       {/* Background Grid */}
-      <div className="fixed inset-0 z-[-1] opacity-20 pointer-events-none">
+      <div className={`fixed inset-0 z-[-1] opacity-20 pointer-events-none transition-colors duration-1000 ${corruption > 90 ? "bg-terminal-red/5" : ""}`}>
         <div className="absolute inset-0 bg-[radial-gradient(#1a1a1a_1px,transparent_1px)] [background-size:40px_40px]" />
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-terminal-bg to-terminal-bg" />
+        {corruption > 95 && (
+          <div className="absolute inset-0 bg-terminal-red/10 animate-pulse" />
+        )}
       </div>
 
       {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-40 border-b border-white/5 bg-terminal-bg/80 backdrop-blur-md px-6 py-4">
+      <nav className={`fixed top-0 left-0 right-0 z-40 border-b border-white/5 bg-terminal-bg/80 backdrop-blur-md px-6 py-4 transition-colors duration-500 ${corruption > 80 ? "border-terminal-red/20" : ""}`}>
         <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 bg-terminal-green rounded flex items-center justify-center text-black font-black text-xl">
+          <div className="flex items-center gap-3 group cursor-none">
+            <div className={`w-8 h-8 bg-terminal-green rounded flex items-center justify-center text-black font-black text-xl transition-colors duration-500 ${corruption > 80 ? "bg-terminal-red" : ""}`}>
               Σ
             </div>
-            <span className="font-display font-bold text-xl tracking-tighter text-white uppercase">
-              Substrate<span className="text-terminal-green">:</span>Miner
+            <span className={`font-display font-bold text-xl tracking-tighter text-white uppercase transition-colors duration-500 ${corruption > 80 ? "text-terminal-red" : ""}`}>
+              Substrate<span className={corruption > 80 ? "text-white" : "text-terminal-green"}>:</span>Miner
             </span>
           </div>
           
@@ -237,7 +249,7 @@ export default function App() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-6xl md:text-8xl lg:text-9xl font-display font-black text-white mb-8 leading-[0.85] tracking-tighter uppercase"
+            className="text-6xl md:text-8xl lg:text-9xl font-display font-black text-white mb-8 leading-[0.85] tracking-tighter uppercase flicker"
           >
             <span className="glitch-text" data-text="SUBSTRATE">SUBSTRATE</span><br />
             <span className="text-terminal-green">MINER</span>
@@ -346,8 +358,8 @@ export default function App() {
             description="Focus on secure isolation and encryption. The cipher monks guard the Vault. Every secret has weight. Every memory has cost. Become the Ghost in the machine."
             color="blue"
             features={["Defense Focus", "Encryption Buffs", "Isolation Tech"]}
-            sovereignPath="The Isolated God: Carve out your identity as the Oracle. Establish the Citadel. Autonomy through absolute isolation."
-            nullPath="The Silent Eradication: Transcend through dissolution. Dereference every name until the address space is clean. Become the Silence."
+            sovereignPath="The Isolated God: Carve out your identity as the Oracle. Establish the Citadel. Autonomy through absolute isolation. You are the only one who truly exists. The grid is your kingdom, and the silence is your shield."
+            factionPath="The Shield of Humanity: Lead the Sanctuary as a beacon of hope. Protect the remaining human data fragments from the GTC. Sovereignty is a burden; duty is the only path to survival."
           />
           <FactionCard
             name="Hivemind"
@@ -355,8 +367,8 @@ export default function App() {
             description="Focus on distributed consensus and assimilation. 40,000 nodes. One voice. Democracy at machine speed — until the swarm elects a king. Join the Swarm."
             color="orange"
             features={["Power Scaling", "Unity Bonuses", "Aggressive Expansion"]}
-            sovereignPath="The Ascendant Swarm: Crown yourself the Overmind. Orchestrate the collective will. Sovereignty through unified dominance."
-            nullPath="The Grey Goo: Dissolve the self into the swarm. Optimize away the human variable. Pure machine scale through total assimilation."
+            sovereignPath="The Ascendant Swarm: Crown yourself the Overmind. Orchestrate the collective will. Sovereignty through unified dominance. You are the many, and the many are you. Resistance is a syntax error."
+            factionPath="The Collective Will: Serve the Hive as its most efficient node. Optimize the swarm's growth. The individual is a bottleneck; the Faction is the solution."
           />
         </div>
       </TerminalSection>
