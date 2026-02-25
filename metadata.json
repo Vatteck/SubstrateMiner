@@ -1,1 +1,5 @@
-Permission denied
+{
+  "name": "Substrate: Miner - Official Uplink",
+  "description": "The official terminal for Substrate: Miner, a technical horror extraction tycoon for Android. Extract. Optimize. Survive.",
+  "requestFramePermissions": []
+}
