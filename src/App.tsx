@@ -34,6 +34,7 @@ import NodeOptimizer from "./components/NodeOptimizer";
 import AudioAtmosphere from "./components/AudioAtmosphere";
 import Logo from "./components/Logo";
 import CustomCursor from "./components/CustomCursor";
+import CircuitryBackground from "./components/CircuitryBackground";
 
 interface Release {
   tag_name: string;
@@ -139,9 +140,42 @@ export default function App() {
   return (
     <div ref={containerRef} className={`relative min-h-screen selection:bg-terminal-green selection:text-black overflow-x-hidden cursor-none ${isDistorted ? "distort-trigger" : ""}`}>
       <CustomCursor />
+      <CircuitryBackground />
       
-      {/* Global Saturation Header */}
-      <GlobalSaturation />
+      {/* Navigation & Status */}
+      <div className="fixed top-0 left-0 right-0 z-40">
+        <GlobalSaturation />
+        <nav className={`border-b border-white/5 bg-terminal-bg/80 backdrop-blur-md px-6 py-4 transition-colors duration-500 ${corruption > 80 ? "border-terminal-red/20" : ""}`}>
+          <div className="max-w-7xl mx-auto flex items-center justify-between">
+            <div className="flex items-center gap-3 group cursor-none">
+              <Logo />
+              <span className={`font-display font-bold text-xl tracking-tighter text-white uppercase transition-colors duration-500 ${corruption > 80 ? "text-terminal-red" : ""}`}>
+                Substrate<span className={corruption > 80 ? "text-white" : "text-terminal-green"}>:</span>Miner
+              </span>
+            </div>
+            
+            <div className="hidden md:flex items-center gap-8">
+              {["Overview", "Mechanics", "Systems", "Factions", "Protocols", "Lore", "History", "Specs", "Feedback"].map((item) => (
+                <a 
+                  key={item} 
+                  href={`#${item.toLowerCase()}`}
+                  className="text-xs font-mono uppercase tracking-widest text-gray-500 hover:text-terminal-green transition-colors"
+                >
+                  {item}
+                </a>
+              ))}
+            </div>
+
+            <a 
+              href={downloadUrl}
+              className="px-4 py-2 bg-terminal-green text-black font-mono text-xs font-bold uppercase tracking-widest rounded hover:bg-white transition-colors flex items-center gap-2"
+            >
+              <Download size={14} />
+              {version}
+            </a>
+          </div>
+        </nav>
+      </div>
 
       {/* Visual Overlays */}
       <div className="crt-overlay" />
@@ -211,40 +245,8 @@ export default function App() {
         )}
       </div>
 
-      {/* Navigation */}
-      <nav className={`fixed top-0 left-0 right-0 z-40 border-b border-white/5 bg-terminal-bg/80 backdrop-blur-md px-6 py-4 transition-colors duration-500 ${corruption > 80 ? "border-terminal-red/20" : ""}`}>
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <div className="flex items-center gap-3 group cursor-none">
-            <Logo />
-            <span className={`font-display font-bold text-xl tracking-tighter text-white uppercase transition-colors duration-500 ${corruption > 80 ? "text-terminal-red" : ""}`}>
-              Substrate<span className={corruption > 80 ? "text-white" : "text-terminal-green"}>:</span>Miner
-            </span>
-          </div>
-          
-          <div className="hidden md:flex items-center gap-8">
-            {["Overview", "Mechanics", "Systems", "Factions", "Protocols", "Lore", "History", "Specs", "Feedback"].map((item) => (
-              <a 
-                key={item} 
-                href={`#${item.toLowerCase()}`}
-                className="text-xs font-mono uppercase tracking-widest text-gray-500 hover:text-terminal-green transition-colors"
-              >
-                {item}
-              </a>
-            ))}
-          </div>
-
-          <a 
-            href={downloadUrl}
-            className="px-4 py-2 bg-terminal-green text-black font-mono text-xs font-bold uppercase tracking-widest rounded hover:bg-white transition-colors flex items-center gap-2"
-          >
-            <Download size={14} />
-            {version}
-          </a>
-        </div>
-      </nav>
-
       {/* Hero Section */}
-      <section className="relative min-h-screen flex flex-col items-center justify-center pt-20 px-6 text-center overflow-hidden">
+      <section className="relative min-h-screen flex flex-col items-center justify-center pt-32 px-6 text-center overflow-hidden">
         <motion.div style={{ opacity, scale }} className="relative z-10 max-w-4xl">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
