@@ -1,6 +1,6 @@
 import { motion } from "motion/react";
 
-export default function CircuitryBackground() {
+function CircuitryBackground() {
   return (
     <div className="fixed inset-0 z-[-1] pointer-events-none overflow-hidden opacity-20">
       <svg width="100%" height="100%" className="absolute inset-0">
@@ -48,3 +48,5 @@ export default function CircuitryBackground() {
     </div>
   );
 }
+
+export default CircuitryBackground;

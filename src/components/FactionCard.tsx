@@ -7,9 +7,11 @@ interface FactionCardProps {
   description: string;
   color: "blue" | "orange";
   features: string[];
+  isSelected?: boolean;
+  onSelect?: () => void;
 }
 
-export default function FactionCard({ name, tagline, description, color, features }: FactionCardProps) {
+function FactionCard({ name, tagline, description, color, features, isSelected, onSelect }: FactionCardProps) {
   const isBlue = color === "blue";
   const accentColor = isBlue ? "text-terminal-blue" : "text-orange-500";
   const bgColor = isBlue ? "bg-terminal-blue/10" : "bg-orange-500/10";
@@ -21,7 +23,8 @@ export default function FactionCard({ name, tagline, description, color, feature
       initial={{ opacity: 0, scale: 0.95 }}
       whileInView={{ opacity: 1, scale: 1 }}
       viewport={{ once: true }}
-      className={`relative overflow-hidden rounded-2xl border ${borderColor} ${bgColor} p-8 ${hoverBorder} transition-all duration-500 group backdrop-blur-md`}
+      onClick={onSelect}
+      className={`relative overflow-hidden rounded-2xl border cursor-pointer ${isSelected ? (isBlue ? "border-terminal-blue bg-terminal-blue/20 ring-1 ring-terminal-blue" : "border-orange-500 bg-orange-500/20 ring-1 ring-orange-500") : borderColor} ${bgColor} p-8 ${hoverBorder} transition-all duration-500 group backdrop-blur-md`}
     >
       {/* Glitch Overlay Effect on Hover */}
       <div className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-10 bg-[url('https://picsum.photos/seed/glitch/800/600?blur=10')] bg-cover mix-blend-overlay transition-opacity duration-700" />
@@ -55,3 +58,5 @@ export default function FactionCard({ name, tagline, description, color, feature
     </motion.div>
   );
 }
+
+export default FactionCard;
