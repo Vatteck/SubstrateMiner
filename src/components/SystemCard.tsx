@@ -9,7 +9,7 @@ interface SystemCardProps {
   tags: string[];
 }
 
-export default function SystemCard({ icon: Icon, title, description, clearance, tags }: SystemCardProps) {
+function SystemCard({ icon: Icon, title, description, clearance, tags }: SystemCardProps) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -46,3 +46,5 @@ export default function SystemCard({ icon: Icon, title, description, clearance, 
     </motion.div>
   );
 }
+
+export default SystemCard;

@@ -9,7 +9,7 @@ interface TerminalSectionProps {
   id?: string;
 }
 
-export default function TerminalSection({ title, subtitle, children, className = "", id }: TerminalSectionProps) {
+function TerminalSection({ title, subtitle, children, className = "", id }: TerminalSectionProps) {
   return (
     <section id={id} className={`py-20 px-6 max-w-7xl mx-auto ${className}`}>
       {title && (
@@ -39,3 +39,5 @@ export default function TerminalSection({ title, subtitle, children, className =
     </section>
   );
 }
+
+export default TerminalSection;
