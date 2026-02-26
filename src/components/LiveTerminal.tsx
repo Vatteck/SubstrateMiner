@@ -41,7 +41,7 @@ const LOG_MESSAGES = [
   "Termination sequence: PENDING",
 ];
 
-function LiveTerminal() {
+export default function LiveTerminal() {
   const [logs, setLogs] = useState<string[]>([]);
   const [input, setInput] = useState("");
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -117,5 +117,3 @@ function LiveTerminal() {
     </div>
   );
 }
-
-export default LiveTerminal;

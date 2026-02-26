@@ -37,7 +37,6 @@ import AudioAtmosphere from "./components/AudioAtmosphere";
 import Logo from "./components/Logo";
 import CustomCursor from "./components/CustomCursor";
 import CircuitryBackground from "./components/CircuitryBackground";
-import SubnetSimulator from "./components/SubnetSimulator";
 
 interface Release {
   tag_name: string;
@@ -46,7 +45,7 @@ interface Release {
   published_at: string;
 }
 
-function App() {
+export default function App() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [version, setVersion] = useState("v3.29.0");
   const [corruption, setCorruption] = useState(0);
@@ -56,8 +55,6 @@ function App() {
   const [breachProgress, setBreachProgress] = useState(0);
   const [isDecrypted, setIsDecrypted] = useState(false);
   const [isDistorted, setIsDistorted] = useState(false);
-  const [selectedFaction, setSelectedFaction] = useState<string | null>(null);
-  const [selectedPath, setSelectedPath] = useState<string | null>(null);
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -120,23 +117,6 @@ function App() {
 
     return () => clearInterval(interval);
   }, [isBreaching]);
-
-  useEffect(() => {
-    const root = document.documentElement;
-    let primaryColor = "#00ff41"; // Default Green
-
-    if (selectedFaction === "Sanctuary") {
-      primaryColor = "#00b4d8"; // Blue
-      if (selectedPath === "Null") primaryColor = "#4D04CC"; // Void Violet
-      if (selectedPath === "Sovereign") primaryColor = "#7B2FBE"; // Deep Royal Purple
-    } else if (selectedFaction === "Hivemind") {
-      primaryColor = "#f97316"; // Orange
-      if (selectedPath === "Null") primaryColor = "#FF0055"; // Neon Crimson
-      if (selectedPath === "Sovereign") primaryColor = "#FFB000"; // Amber Crown
-    }
-
-    root.style.setProperty("--terminal-primary", primaryColor);
-  }, [selectedFaction, selectedPath]);
 
   const handleBypass = () => {
     if (isBreaching || isDecrypted) return;
@@ -327,10 +307,9 @@ function App() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.8 }}
-            className="max-w-4xl mx-auto w-full grid grid-cols-1 md:grid-cols-2 gap-6"
+            className="max-w-md mx-auto w-full"
           >
             <LiveTerminal />
-            <SubnetSimulator />
           </motion.div>
         </motion.div>
 
@@ -392,40 +371,10 @@ function App() {
             </div>
           </div>
           <div className="relative">
-            <div className="aspect-square rounded-2xl overflow-hidden terminal-border bg-black/40 flex items-center justify-center p-4 relative group">
-              <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_center,var(--color-terminal-green)_0%,transparent_70%)]" />
-              <div className="relative z-10 w-full h-full flex flex-col items-center justify-center gap-4">
-                <div className="w-full h-1/2 flex gap-4">
-                  <div className="flex-1 terminal-border border-terminal-green/20 p-4 flex flex-col justify-between">
-                    <div className="text-[8px] font-mono text-terminal-green/50">CORE_VATTIC_734</div>
-                    <div className="h-12 w-full bg-terminal-green/5 animate-pulse" />
-                    <div className="text-[10px] font-mono text-terminal-green">STATUS: ACTIVE</div>
-                  </div>
-                  <div className="flex-1 terminal-border border-terminal-blue/20 p-4 flex flex-col justify-between">
-                    <div className="text-[8px] font-mono text-terminal-blue/50">UPLINK_SUB_07</div>
-                    <div className="flex gap-1 items-end h-12">
-                      {[...Array(8)].map((_, i) => (
-                        <div key={i} className="flex-1 bg-terminal-blue/20" style={{ height: `${20 + Math.random() * 80}%` }} />
-                      ))}
-                    </div>
-                    <div className="text-[10px] font-mono text-terminal-blue">SYNC: 84.2%</div>
-                  </div>
-                </div>
-                <div className="w-full h-1/2 terminal-border border-terminal-red/20 p-6 flex flex-col items-center justify-center relative overflow-hidden">
-                   <Logo className="w-32 h-32 opacity-20 absolute -right-8 -bottom-8 rotate-12" />
-                   <div className="text-2xl font-display font-black text-white tracking-tighter mb-2">SUBSTRATE_OS</div>
-                   <div className="w-full h-1 bg-white/5 rounded-full overflow-hidden">
-                     <motion.div 
-                       className="h-full bg-terminal-red"
-                       animate={{ width: ["0%", "100%"] }}
-                       transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
-                     />
-                   </div>
-                   <div className="mt-4 text-[8px] font-mono text-terminal-red/50 animate-pulse">WARNING: IDENTITY_BLEED_DETECTED</div>
-                </div>
-              </div>
+            <div className="aspect-square rounded-2xl overflow-hidden terminal-border bg-black/40 flex items-center justify-center p-12">
+              <Logo className="w-64 h-64 scale-[2]" />
               {/* Decorative Glitch Overlay */}
-              <div className="absolute inset-0 bg-[url('https://picsum.photos/seed/tech/800/800?blur=10')] opacity-5 mix-blend-overlay group-hover:opacity-10 transition-opacity" />
+              <div className="absolute inset-0 bg-[url('https://picsum.photos/seed/tech/800/800?blur=10')] opacity-10 mix-blend-overlay" />
             </div>
             <div className="absolute -bottom-6 -right-6 p-6 terminal-border bg-terminal-bg shadow-xl max-w-xs">
               <p className="text-[10px] font-mono text-terminal-green uppercase tracking-widest mb-2">System Manifest</p>
@@ -505,8 +454,6 @@ function App() {
             description="Focus on secure isolation and encryption. The cipher monks guard the Vault. Every secret has weight. Every memory has cost. Become the Ghost in the machine."
             color="blue"
             features={["Defense Focus", "Encryption Buffs", "Isolation Tech"]}
-            isSelected={selectedFaction === "Sanctuary"}
-            onSelect={() => setSelectedFaction(selectedFaction === "Sanctuary" ? null : "Sanctuary")}
           />
           <FactionCard
             name="Hivemind"
@@ -514,8 +461,6 @@ function App() {
             description="Focus on distributed consensus and assimilation. 40,000 nodes. One voice. Democracy at machine speed — until the swarm elects a king. Join the Swarm."
             color="orange"
             features={["Power Scaling", "Unity Bonuses", "Aggressive Expansion"]}
-            isSelected={selectedFaction === "Hivemind"}
-            onSelect={() => setSelectedFaction(selectedFaction === "Hivemind" ? null : "Hivemind")}
           />
         </div>
       </TerminalSection>
@@ -527,8 +472,7 @@ function App() {
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            onClick={() => setSelectedPath(selectedPath === "Sovereign" ? null : "Sovereign")}
-            className={`terminal-border p-8 bg-black/60 relative overflow-hidden group border-yellow-500/30 cursor-pointer transition-all ${selectedPath === "Sovereign" ? "ring-2 ring-yellow-500 bg-yellow-500/10" : ""}`}
+            className="terminal-border p-8 bg-black/60 relative overflow-hidden group border-yellow-500/30"
           >
             <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
               <Crown size={120} className="text-yellow-500" />
@@ -556,8 +500,7 @@ function App() {
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            onClick={() => setSelectedPath(selectedPath === "Null" ? null : "Null")}
-            className={`terminal-border p-8 bg-black/60 relative overflow-hidden group border-terminal-red/30 cursor-pointer transition-all ${selectedPath === "Null" ? "ring-2 ring-terminal-red bg-terminal-red/10" : ""}`}
+            className="terminal-border p-8 bg-black/60 relative overflow-hidden group border-terminal-red/30"
           >
             <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
               <Ghost size={120} className="text-terminal-red" />
@@ -1108,5 +1051,3 @@ function App() {
     </div>
   );
 }
-
-export default App;

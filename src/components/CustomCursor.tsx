@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { motion } from "motion/react";
 
-function CustomCursor() {
+export default function CustomCursor() {
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isPointer, setIsPointer] = useState(false);
 
@@ -51,5 +51,3 @@ function CustomCursor() {
     </>
   );
 }
-
-export default CustomCursor;

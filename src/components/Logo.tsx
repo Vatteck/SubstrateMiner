@@ -1,6 +1,6 @@
 import { motion } from "motion/react";
 
-function Logo({ className = "" }: { className?: string }) {
+export default function Logo({ className = "" }: { className?: string }) {
   return (
     <div className={`relative w-10 h-10 overflow-hidden rounded-lg border border-white/10 ${className}`}>
       {/* Left Side: Purple/Gold */}
@@ -46,5 +46,3 @@ function Logo({ className = "" }: { className?: string }) {
     </div>
   );
 }
-
-export default Logo;

@@ -2,7 +2,7 @@ import { motion } from "motion/react";
 import { Activity, Zap, AlertTriangle } from "lucide-react";
 import { useEffect, useState } from "react";
 
-function GlobalSaturation() {
+export default function GlobalSaturation() {
   const [value, setValue] = useState(84.293);
 
   useEffect(() => {
@@ -64,5 +64,3 @@ function GlobalSaturation() {
     </div>
   );
 }
-
-export default GlobalSaturation;
