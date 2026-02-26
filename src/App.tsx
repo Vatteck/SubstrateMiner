@@ -38,6 +38,7 @@ import Logo from "./components/Logo";
 import CustomCursor from "./components/CustomCursor";
 import CircuitryBackground from "./components/CircuitryBackground";
 import SubnetSimulator from "./components/SubnetSimulator";
+import NewsTicker from "./components/NewsTicker";
 
 interface Release {
   tag_name: string;
@@ -166,6 +167,7 @@ function App() {
       
       {/* Navigation & Status */}
       <div className="fixed top-0 left-0 right-0 z-40">
+        <NewsTicker />
         <GlobalSaturation />
         <nav className={`border-b border-white/5 bg-terminal-bg/80 backdrop-blur-md px-6 py-4 transition-colors duration-500 ${corruption > 80 ? "border-terminal-red/20" : ""}`}>
           <div className="max-w-7xl mx-auto flex items-center justify-between">
