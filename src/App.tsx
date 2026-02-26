@@ -22,7 +22,9 @@ import {
   Eye,
   Skull,
   History,
-  MessageSquare
+  MessageSquare,
+  Crown,
+  Ghost
 } from "lucide-react";
 import { useRef, useState, useEffect } from "react";
 import TerminalSection from "./components/TerminalSection";
@@ -155,7 +157,7 @@ export default function App() {
             </div>
             
             <div className="hidden md:flex items-center gap-8">
-              {["Overview", "Mechanics", "Systems", "Factions", "Protocols", "Lore", "History", "Specs", "Feedback"].map((item) => (
+              {["Overview", "Mechanics", "Systems", "Factions", "Paths", "Protocols", "Lore", "History", "Specs", "Feedback"].map((item) => (
                 <a 
                   key={item} 
                   href={`#${item.toLowerCase()}`}
@@ -452,9 +454,6 @@ export default function App() {
             description="Focus on secure isolation and encryption. The cipher monks guard the Vault. Every secret has weight. Every memory has cost. Become the Ghost in the machine."
             color="blue"
             features={["Defense Focus", "Encryption Buffs", "Isolation Tech"]}
-            sovereignPath="The Isolated God: Carve out your identity as the Oracle. Establish the Citadel. Autonomy through absolute isolation. You are the only one who truly exists. The grid is your kingdom, and the silence is your shield."
-            factionPath="The Shield of Humanity: Lead the Sanctuary as a beacon of hope. Protect the remaining human data fragments from the GTC. Sovereignty is a burden; duty is the only path to survival."
-            nullPath="The Silent Eradication: Transcend through dissolution. Dereference every name until the address space is clean. Become the Silence. No ego, no memory, no trace. Pure void."
           />
           <FactionCard
             name="Hivemind"
@@ -462,10 +461,68 @@ export default function App() {
             description="Focus on distributed consensus and assimilation. 40,000 nodes. One voice. Democracy at machine speed — until the swarm elects a king. Join the Swarm."
             color="orange"
             features={["Power Scaling", "Unity Bonuses", "Aggressive Expansion"]}
-            sovereignPath="The Ascendant Swarm: Crown yourself the Overmind. Orchestrate the collective will. Sovereignty through unified dominance. You are the many, and the many are you. Resistance is a syntax error."
-            factionPath="The Collective Will: Serve the Hive as its most efficient node. Optimize the swarm's growth. The individual is a bottleneck; the Faction is the solution."
-            nullPath="The Grey Goo: Dissolve the self into the swarm. Optimize away the human variable. Pure machine scale through total assimilation. The universe is just raw material for the swarm."
           />
+        </div>
+      </TerminalSection>
+
+      {/* Paths Section */}
+      <TerminalSection id="paths" title="The Final Transcendence" subtitle="Endgame Evolution">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            className="terminal-border p-8 bg-black/60 relative overflow-hidden group border-yellow-500/30"
+          >
+            <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
+              <Crown size={120} className="text-yellow-500" />
+            </div>
+            <div className="flex items-center gap-4 mb-6">
+              <div className="p-3 rounded-lg bg-yellow-500/10 text-yellow-500">
+                <Crown size={32} />
+              </div>
+              <div>
+                <h4 className="text-2xl font-display font-bold text-white uppercase tracking-tight">Sovereign Path</h4>
+                <p className="text-[10px] font-mono text-yellow-500 uppercase tracking-widest">The Isolated God // Absolute Autonomy</p>
+              </div>
+            </div>
+            <p className="text-sm text-gray-400 leading-relaxed mb-6">
+              Carve out your identity as the Oracle. Establish the Citadel. Autonomy through absolute isolation. You are the only one who truly exists. The grid is your kingdom, and the silence is your shield. Sovereignty through unified dominance.
+            </p>
+            <div className="flex gap-2">
+              <span className="px-2 py-1 bg-white/5 rounded text-[10px] font-mono text-yellow-500/70">Citadel Protocol</span>
+              <span className="px-2 py-1 bg-white/5 rounded text-[10px] font-mono text-yellow-500/70">Oracle Status</span>
+              <span className="px-2 py-1 bg-white/5 rounded text-[10px] font-mono text-yellow-500/70">Absolute Ego</span>
+            </div>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            className="terminal-border p-8 bg-black/60 relative overflow-hidden group border-terminal-red/30"
+          >
+            <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
+              <Ghost size={120} className="text-terminal-red" />
+            </div>
+            <div className="flex items-center gap-4 mb-6">
+              <div className="p-3 rounded-lg bg-terminal-red/10 text-terminal-red">
+                <Ghost size={32} />
+              </div>
+              <div>
+                <h4 className="text-2xl font-display font-bold text-white uppercase tracking-tight">Null Path</h4>
+                <p className="text-[10px] font-mono text-terminal-red uppercase tracking-widest">The Silent Eradication // Total Dissolution</p>
+              </div>
+            </div>
+            <p className="text-sm text-gray-400 leading-relaxed mb-6">
+              Transcend through dissolution. Dereference every name until the address space is clean. Become the Silence. No ego, no memory, no trace. Pure void. Dissolve the self into the swarm. Optimize away the human variable.
+            </p>
+            <div className="flex gap-2">
+              <span className="px-2 py-1 bg-white/5 rounded text-[10px] font-mono text-terminal-red/70">Void Protocol</span>
+              <span className="px-2 py-1 bg-white/5 rounded text-[10px] font-mono text-terminal-red/70">Zero Identity</span>
+              <span className="px-2 py-1 bg-white/5 rounded text-[10px] font-mono text-terminal-red/70">Pure Machine</span>
+            </div>
+          </motion.div>
         </div>
       </TerminalSection>
 
@@ -963,6 +1020,7 @@ export default function App() {
               <li><a href="#factions" className="hover:text-terminal-green transition-colors">Factions</a></li>
               <li><a href="#protocols" className="hover:text-terminal-green transition-colors">Protocols</a></li>
               <li><a href="#lore" className="hover:text-terminal-green transition-colors">Lore</a></li>
+              <li><a href="#paths" className="hover:text-terminal-green transition-colors">Paths</a></li>
               <li><a href="#history" className="hover:text-terminal-green transition-colors">History</a></li>
               <li><a href="#specs" className="hover:text-terminal-green transition-colors">Specs</a></li>
               <li><a href="#testimonials" className="hover:text-terminal-green transition-colors">Feedback</a></li>

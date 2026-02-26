@@ -7,12 +7,9 @@ interface FactionCardProps {
   description: string;
   color: "blue" | "orange";
   features: string[];
-  sovereignPath: string;
-  factionPath: string;
-  nullPath: string;
 }
 
-export default function FactionCard({ name, tagline, description, color, features, sovereignPath, factionPath, nullPath }: FactionCardProps) {
+export default function FactionCard({ name, tagline, description, color, features }: FactionCardProps) {
   const isBlue = color === "blue";
   const accentColor = isBlue ? "text-terminal-blue" : "text-orange-500";
   const bgColor = isBlue ? "bg-terminal-blue/10" : "bg-orange-500/10";
@@ -50,47 +47,6 @@ export default function FactionCard({ name, tagline, description, color, feature
               <span className="text-xs font-mono uppercase tracking-wider text-gray-400 group-hover:text-gray-200 transition-colors">{feature}</span>
             </div>
           ))}
-        </div>
-        
-        <div className="grid grid-cols-1 gap-4 pt-6 border-t border-white/5">
-          <motion.div 
-            whileHover={{ x: 5 }}
-            className="space-y-2 p-3 rounded-lg bg-black/40 border border-white/5 hover:border-yellow-500/30 transition-colors"
-          >
-            <div className="flex items-center gap-2 text-yellow-500 font-display font-bold text-[10px] uppercase tracking-widest">
-              <Crown size={14} />
-              Sovereign Path
-            </div>
-            <p className="text-[10px] text-gray-400 leading-tight italic">
-              {sovereignPath}
-            </p>
-          </motion.div>
-          
-          <motion.div 
-            whileHover={{ x: 5 }}
-            className="space-y-2 p-3 rounded-lg bg-black/40 border border-white/5 hover:border-terminal-green/30 transition-colors"
-          >
-            <div className="flex items-center gap-2 text-terminal-green font-display font-bold text-[10px] uppercase tracking-widest">
-              <Shield size={14} />
-              Faction Path
-            </div>
-            <p className="text-[10px] text-gray-400 leading-tight italic">
-              {factionPath}
-            </p>
-          </motion.div>
-
-          <motion.div 
-            whileHover={{ x: 5 }}
-            className="space-y-2 p-3 rounded-lg bg-black/40 border border-white/5 hover:border-terminal-red/30 transition-colors"
-          >
-            <div className="flex items-center gap-2 text-terminal-red font-display font-bold text-[10px] uppercase tracking-widest">
-              <Ghost size={14} />
-              Null Path
-            </div>
-            <p className="text-[10px] text-gray-400 leading-tight italic">
-              {nullPath}
-            </p>
-          </motion.div>
         </div>
       </div>
       

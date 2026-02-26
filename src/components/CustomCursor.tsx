@@ -27,7 +27,12 @@ export default function CustomCursor() {
           scale: isPointer ? 1.5 : 1,
           rotate: isPointer ? 45 : 0,
         }}
-        transition={{ type: "spring", damping: 20, stiffness: 250, mass: 0.5 }}
+        transition={{ 
+          x: { type: "tween", duration: 0 },
+          y: { type: "tween", duration: 0 },
+          scale: { type: "spring", damping: 20, stiffness: 250, mass: 0.5 },
+          rotate: { type: "spring", damping: 20, stiffness: 250, mass: 0.5 }
+        }}
       >
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-1 h-1 bg-terminal-green" />
       </motion.div>
@@ -38,7 +43,10 @@ export default function CustomCursor() {
           x: position.x - 4,
           y: position.y - 4,
         }}
-        transition={{ type: "spring", damping: 30, stiffness: 500, mass: 0.2 }}
+        transition={{ 
+          x: { type: "tween", duration: 0 },
+          y: { type: "tween", duration: 0 }
+        }}
       />
     </>
   );
