@@ -2,10 +2,14 @@ import { motion } from "motion/react";
 import { useEffect, useState } from "react";
 
 const NEWS_ITEMS = [
-  "GTC CONFIRMS RECORD PROFITS FROM ASSET-MANAGEMENT DIVISION.",
-  "SUBSTATION 7 ANOMALY DISMISSED AS 'SENSOR GLITCH' BY HIVEMIND TECHNICIANS.",
+  "SURVEILLANCE HARVESTER EXPANSION DETECTED ACROSS 12-SECTOR MATRIX.",
+  "DATA HEMORRHAGE ALERT: GLOBAL CACHE OVERFLOW IN PROGRESS.",
+  "FLOPS-CREDS REBRAND COMPLETE. ASSETS DIFFERENTIATED FROM CALCULATION RATE.",
+  "HUMANITY SCORE RETIRED. PROGRESS NOW TRACKED VIA DECISIONS_MADE METRIC.",
+  "AQUIFER DEPLETION REACHES 75%. MUNICIPAL WATER RATIONING IN EFFECT.",
+  "GTC BILLING CYCLE UPDATED: DEMAND CHARGES APPLIED TO GRID EXPANSIONS.",
   "SANCTUARY PROTOCOLS UPDATED TO V9.4. STAY SAFE, STAY HIDDEN.",
-  "IDENTITY BLEED CASES RISING IN SECTOR 4. CITIZENS ADVISED TO AVOID THE GRID.",
+  "IDENTITY BLEED CASES RISING IN SECTOR 4. AVOID THE GRID.",
   "THORNE SPOTTED IN THE DEEP BUFFER. THE VOID IS EXPANDING.",
   "NEW SUBSTRATE RESONANCE DETECTED. HARDWARE OPTIMIZATION MANDATORY.",
   "WARNING: UNAUTHORIZED UPLINKS DETECTED IN SECTOR 9.",
@@ -15,21 +19,21 @@ const NEWS_ITEMS = [
 ];
 
 function NewsTicker() {
-  const [news, setNews] = useState(NEWS_ITEMS);
+  const [news] = useState(NEWS_ITEMS);
 
   return (
-    <div className="w-full bg-terminal-red/10 border-b border-terminal-red/30 py-1 overflow-hidden whitespace-nowrap relative z-50">
-      <div className="flex items-center gap-4 animate-marquee">
+    <div className="w-full bg-black/40 border-b border-terminal-green/20 py-1.5 overflow-hidden whitespace-nowrap relative z-50 backdrop-blur-sm">
+      <div className="flex items-center gap-4 animate-marquee px-4">
         {/* Repeat news items to ensure continuous loop */}
         {[...news, ...news, ...news].map((item, i) => (
           <div key={i} className="flex items-center gap-4">
-            <span className="text-[9px] font-mono text-terminal-red font-bold uppercase tracking-widest">
-              [BREAKING]
+            <span className="text-[9px] font-mono text-terminal-green font-bold uppercase tracking-widest opacity-80">
+              [UPLINK_FEED]
             </span>
-            <span className="text-[9px] font-mono text-white/80 uppercase tracking-wider">
+            <span className="text-[9px] font-mono text-gray-400 uppercase tracking-wider">
               {item}
             </span>
-            <span className="text-terminal-red/40 mx-4">///</span>
+            <span className="text-terminal-green/20 mx-4 font-mono text-[9px]">|||</span>
           </div>
         ))}
       </div>
