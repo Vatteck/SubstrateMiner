@@ -161,7 +161,7 @@ function App() {
   const downloadUrl = `https://github.com/Vatteck/SiliconSageAIMiner/releases/download/${version}/MINER_${version.replace('v', '')}.apk`;
 
   return (
-    <div ref={containerRef} className={`relative min-h-screen selection:bg-terminal-green selection:text-black overflow-x-hidden cursor-none ${isDistorted ? "distort-trigger" : ""}`}>
+    <div ref={containerRef} className={`relative min-h-screen selection:bg-terminal-green selection:text-black overflow-x-hidden lg:cursor-none ${isDistorted ? "distort-trigger" : ""}`}>
       <CustomCursor />
       <CircuitryBackground />
       
@@ -171,7 +171,7 @@ function App() {
         <GlobalSaturation />
         <nav className={`border-b border-white/5 bg-terminal-bg/80 backdrop-blur-md px-6 py-4 transition-colors duration-500 ${corruption > 80 ? "border-terminal-red/20" : ""}`}>
           <div className="max-w-7xl mx-auto flex items-center justify-between">
-            <div className="flex items-center gap-3 group cursor-none">
+            <div className="flex items-center gap-3 group lg:cursor-none">
               <Logo />
               <span className={`font-display font-bold text-xl tracking-tighter text-white uppercase transition-colors duration-500 ${corruption > 80 ? "text-terminal-red" : ""}`}>
                 Substrate<span className={corruption > 80 ? "text-white" : "text-terminal-green"}>:</span>Miner

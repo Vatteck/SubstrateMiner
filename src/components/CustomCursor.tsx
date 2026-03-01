@@ -4,9 +4,15 @@ import { motion } from "motion/react";
 function CustomCursor() {
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isPointer, setIsPointer] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
+    // Only show custom cursor if device has a fine pointer (mouse)
+    const mediaQuery = window.matchMedia("(pointer: fine)");
+    setIsVisible(mediaQuery.matches);
+
     const handleMouseMove = (e: MouseEvent) => {
+      if (!mediaQuery.matches) return;
       setPosition({ x: e.clientX, y: e.clientY });
       
       const target = e.target as HTMLElement;
@@ -17,8 +23,10 @@ function CustomCursor() {
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
 
+  if (!isVisible) return null;
+
   return (
-    <>
+    <div className="hidden lg:block">
       <motion.div
         className="fixed top-0 left-0 w-6 h-6 border border-terminal-green pointer-events-none z-[9999] mix-blend-difference"
         animate={{
@@ -48,7 +56,7 @@ function CustomCursor() {
           y: { type: "tween", duration: 0 }
         }}
       />
-    </>
+    </div>
   );
 }
 
